@@ -13,3 +13,8 @@ There is also an implmentation to create a computational graph from a node that 
 
 ## Special Notes
 Currently, the only activation function used is tanh and the only loss function used is squared error loss. It also currently uses only stochastic gradient descent for its optimizations. Also please note: pegasus is only for pedantic purposes, i.e if you use it with more than 300 training examples, it WILL definately blow up your system :)
+
+## To run tests
+I implemented a sample test by builing a neural network to predict house prices using pegasus. To run the tests intall pagasus by running 
+`pip install .` in your terminal and then move to the tests folder and run the test files, you can write your own tests files to try out pegasus on you regression problem, For this particular house price prediction problem, pegasus was able to optimize from a mean square error of `5.563114144040255` to `0.6414251209567784` over 15 epochs. 
+More details can be found in the file.ß

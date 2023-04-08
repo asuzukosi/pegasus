@@ -4,7 +4,7 @@ setup(
     name='src/pegasus',
     version='0.1.0',    
     description='A micro deep learning library',
-    url='https://github.com/shuds13/pyexample',
+    url='https://github.com/asuzukosi/pegasus',
     author='Asuzu Kosi',
     author_email='keloasuzu@yahoo.com',
     license='BSD 2-clause',

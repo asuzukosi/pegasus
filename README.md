@@ -1,6 +1,6 @@
 ## Pegasus deep learning micro library built with only python and numpy v1
 
-![alt text](./images/pegasus.jpg)
+![alt text](./assets/pegasus.jpg)
 
 ## Introduction
 With the steady growth in the development of deep learning, there have been several layers of abstraction which have been built to simplify communication of ideas and speed up development. But the cost is that fewer people understand the foundational building blocks of deep learning models : the perceptron. This project is intended to be a *very simple* decomposition of a deep learning library, meant only for pedantic purposes. 

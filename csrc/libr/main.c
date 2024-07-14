@@ -8,8 +8,11 @@ int main(int argc, char **argv){
                       {3, 4}};
     double* b = (double*)a;
 
-    // printf("testing %f \n", b[0][0]);
+    double* c = transposematrix((double*)a, 2, 2);
+
     printmatrix((double*)a, 2, 2);
+    printf("\n");
+    printmatrix((double*)c, 2, 2);
     // double *arr = getcolumnvector((double *)a, 2, 2, 2);
     // printvector(arr, 2);
     // free(arr);

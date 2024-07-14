@@ -12,7 +12,7 @@ double dotproduct(const double *a, const double *b, int size){
 double * getrowvector(const double *a, int rowsize, int colsize, int rowindex){
     // create the row vector from a matrix
     if(rowindex >= rowsize){
-        printf("row index out of range \n");
+        printf("row index %d out of range \n", rowindex);
         exit(0);
     }
     double *row = malloc(sizeof(double) * colsize);
@@ -27,7 +27,7 @@ double * getrowvector(const double *a, int rowsize, int colsize, int rowindex){
 double * getcolumnvector(const double *a, int rowsize, int colsize, int colindex){
     // create the column vector from a matrix
     if(colindex >= colsize){
-        printf("column index out of range \n");
+        printf("column index %d out of range \n", colindex);
         exit(0);
     }
     double *column = malloc(sizeof(double) * rowsize);
@@ -39,6 +39,20 @@ double * getcolumnvector(const double *a, int rowsize, int colsize, int colindex
     return column;
 }
 
+double* transposematrix(const double *a, int rowsize, int colsize){
+    double* result  = malloc(sizeof(double) * rowsize * colsize);
+    double* column = NULL;
+    int pos = 0;
+    for(int i=0; i < colsize; i++){
+        column = getcolumnvector(a, rowsize, colsize, i);
+        for(int j = 0; j < rowsize; j++){
+            pos = (i * rowsize) + j;
+            result[pos] = column[j];
+        }
+    }
+    return result;
+}
+
 void printvector(const double *a, int size){
     printf("{ ");
     for(int i=0; i<size; i++){
@@ -47,8 +61,6 @@ void printvector(const double *a, int size){
 
     printf("} \n");
 }
-
-
 
 void printmatrix(const double *a, int numrows, int numcolumns){
     int pos;

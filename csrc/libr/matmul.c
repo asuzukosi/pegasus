@@ -53,6 +53,26 @@ double* transposematrix(const double *a, int rowsize, int colsize){
     return result;
 }
 
+double* matrixmultiply(const double *a, int rowsizea, int colsizea, double *b, int rowsizeb, int colsizeb){
+    // create result matrix memory
+    if(colsizea != rowsizeb){
+        printf("incompatible matrix multiplication shape: (%d, %d) != (%d, %d) \n", rowsizea, colsizea, rowsizeb, colsizeb);
+    }
+    double* result = malloc(sizeof(double) * rowsizea * colsizeb);
+    double* row = NULL;
+    double* column = NULL;
+    int pos;
+    for(int i=0; i < rowsizea; i++){
+        row = getrowvector(a, rowsizea, colsizea, i);
+        for(int j=0; j<colsizeb; j++){
+            column = getcolumnvector(b, rowsizeb, colsizeb, j);
+            pos = (i * colsizeb) + j;
+            result[pos] = dotproduct(row, column, colsizea);
+        }
+    }
+    return result;
+}
+
 void printvector(const double *a, int size){
     printf("{ ");
     for(int i=0; i<size; i++){
@@ -76,4 +96,12 @@ void printmatrix(const double *a, int numrows, int numcolumns){
             printf("\n");
     }
     printf("\n");
+}
+
+double* scalaradd(const double *a, int numrows, int numcolumns, double value){
+    // TODO: implement scalar addition
+}
+
+double* vectoradd(const double *a, int numrows, int numcolums, double* vector, int vsize, int dim){
+    // TODO: implement vector addition based on axis of either 1 or 0
 }

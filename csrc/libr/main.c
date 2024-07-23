@@ -2,6 +2,10 @@
 #include "stdlib.h"
 #include "stdio.h"
 
+double add(double x, double y){
+    return x + y;
+}
+
 int main(int argc, char **argv){
     // testing vector dot product
     double a[2][2] = {{1, 2},
@@ -11,10 +15,12 @@ int main(int argc, char **argv){
     double b[2][2] = {{1, 1},
                       {1, 1}};
 
-    double* c = matrixmultiply((double *)a, 2, 2, (double *)b, 2, 2);
+    // double* c = matrixmultiply((double *)a, 2, 2, (double *)b, 2, 2);
 
-    printmatrix(c, 2, 2);
-    free(c);
+    double* d = scalar_vector_op((double *)b, 2, 2, add , 5);
+
+    printmatrix(d, 2, 2);
+    free(d);
     // double* c = transposematrix((double*)a, 2, 2);
 
     // printmatrix((double*)a, 2, 2);

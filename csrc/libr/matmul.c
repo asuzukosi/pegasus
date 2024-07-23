@@ -98,12 +98,19 @@ void printmatrix(const double *a, int numrows, int numcolumns){
     printf("\n");
 }
 
-double* scalaradd(const double *a, int numrows, int numcolumns, double value){
-    // TODO: implement scalar addition
-    // TODO: make this generic so it can support any kind of function with signature int f(int, int)
+double* scalar_vector_op(const double *a, int numrows, int numcolumns, double(* op)(double, double) ,double scalar){
+    int pos;
+    double* result = malloc(numcolumns * numrows * sizeof(double));
+    for(int i = 0; i < numrows; i++){
+        for(int j=0; j < numcolumns; j++){
+            pos = (i * numcolumns) + j;
+            result[pos] = op(a[pos], scalar);
+        }
+    }
+    return result;
 }
 
-double* vectoradd(const double *a, int numrows, int numcolums, double* vector, int vsize, int dim){
-    // TODO: implement vector addition based on axis of either 1 or 0
-    // TODO: make this generic so it can support any kind of function with signature int f(int, int)
-}
+// double* vectoradd(const double *a, int numrows, int numcolums, double* vector, int vsize, int dim){
+//     // TODO: implement vector addition based on axis of either 1 or 0
+//     // TODO: make this generic so it can support any kind of function with signature int f(int, int)
+// }

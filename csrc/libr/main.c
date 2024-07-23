@@ -14,10 +14,13 @@ int main(int argc, char **argv){
     
     double b[2][2] = {{1, 1},
                       {1, 1}};
+    
+    double v[2] = {1, 2};
 
     // double* c = matrixmultiply((double *)a, 2, 2, (double *)b, 2, 2);
 
-    double* d = scalar_vector_op((double *)b, 2, 2, add , 5);
+    // double* d = scalar_matrix_op((double *)b, 2, 2, add , 5);
+    double* d = vector_matrix_op((double *)a, 2, 2, (double *)v, 2, 1, add);
 
     printmatrix(d, 2, 2);
     free(d);

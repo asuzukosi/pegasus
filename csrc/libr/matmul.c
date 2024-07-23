@@ -98,7 +98,7 @@ void printmatrix(const double *a, int numrows, int numcolumns){
     printf("\n");
 }
 
-double* scalar_vector_op(const double *a, int numrows, int numcolumns, double(* op)(double, double) ,double scalar){
+double* scalar_matrix_op(const double *a, int numrows, int numcolumns, double(* op)(double, double) ,double scalar){
     int pos;
     double* result = malloc(numcolumns * numrows * sizeof(double));
     for(int i = 0; i < numrows; i++){
@@ -110,7 +110,58 @@ double* scalar_vector_op(const double *a, int numrows, int numcolumns, double(* 
     return result;
 }
 
-// double* vectoradd(const double *a, int numrows, int numcolums, double* vector, int vsize, int dim){
-//     // TODO: implement vector addition based on axis of either 1 or 0
-//     // TODO: make this generic so it can support any kind of function with signature int f(int, int)
-// }
+double* vector_matrix_op(const double *a, int numrows, int numcolums, double* vector, int vsize, int dim, double(*op)(double, double)){
+    // TODO: implement vector addition based on axis of either 1 or 0
+    int pos;
+    double* result = malloc(numrows * numcolums * sizeof(double));
+
+    // TODO: make this generic so it can support any kind of function with signature int f(int, int)
+    switch (dim)
+    {
+    case 0:
+        /* perform operation by row*/
+        if(numrows != vsize) {
+            printf("vector of size %d is not of row size %d\n", vsize, numrows);
+            exit(0);
+        }
+        for(int i = 0; i < numcolums; i++){
+            for(int j = 0; j < numrows; j++){
+                pos = i + (j * numcolums);
+                result[pos] = op(a[pos], vector[j]);
+            }
+        }
+        break;
+    
+    case 1:
+        /* perform operation by column */
+        if(numcolums != vsize) {
+            printf("vector of size %d is not of column size %d\n", vsize, numcolums);
+            exit(0);
+        }
+        for(int i = 0; i < numrows; i++){
+            for(int j = 0; j < numcolums; j++){
+                pos = j + (i * numcolums);
+                result[pos] = op(a[pos], vector[j]);
+            }
+        }
+        break;
+    default:
+        printf("invalid dimension \n");
+        break;
+    }
+    return result;
+}
+
+/*
+Implement these operations for all axis and for all entries (dim = -1)
+*/
+
+// implement argmin
+
+// implement argmax
+
+// implement min
+
+// implement max
+
+// implement sum

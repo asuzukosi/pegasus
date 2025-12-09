@@ -4,16 +4,13 @@ from setuptools import setup
 setup(
     name='src/pegasus',
     version='0.1.0',    
-    description='A micro deep learning library',
+    description='A micro generative AI library',
     url='https://github.com/asuzukosi/pegasus',
     author='Asuzu Kosi',
     author_email='keloasuzu@yahoo.com',
     license='BSD 2-clause',
     packages=['pegasus'],
-    install_requires=['graphviz',
-                      'scikit-learn',
-                      'numpy',                     
-                      ],
+    install_requires=['anthropic'],
 
     classifiers=[
         'Development Status :: 1 - Planning',

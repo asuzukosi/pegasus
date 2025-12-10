@@ -148,3 +148,7 @@ class EvaluatorOptimizerWorkflow:
         return OptimizerResult(result=memory[-1], 
                                 chain_of_thought=chain_of_thought, 
                                 memory=memory)
+
+
+class DynamicOrchestratorWorkflow:
+    pass

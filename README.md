@@ -1,4 +1,4 @@
-## Pegasus generative AI micro library built with python
+## Pegasus:  Generative AI micro library built with python
 
 ![alt text](./assets/pegasus.jpg)
 

@@ -60,3 +60,11 @@ class RoutingWorkflow:
     def run(self, query: str) -> str:
         route = self._select_route(query)
         return self._execute_route(route, query)
+
+
+class EvaluatorOptimizerWorkflow:
+    def __init__(self):
+        pass
+
+    def run(self):
+        pass

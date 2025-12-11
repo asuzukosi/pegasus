@@ -1,11 +1,11 @@
 import os
-import json
 from llm_call import IntelligenceEngine
 from xml_processor import XMLProcessor
 from utils.logger import logger
 from concurrent.futures import ThreadPoolExecutor
 from typing import Dict, List
 from dataclasses import dataclass
+import xmltodict
 
 
 class ChainWorkflow:
@@ -149,6 +149,66 @@ class EvaluatorOptimizerWorkflow:
                                 chain_of_thought=chain_of_thought, 
                                 memory=memory)
 
+@dataclass
+class Task:
+    name: str
+    description: str
+    type: str
+
+@dataclass
+class WorkerResult:
+    name: str
+    description: str
+    type: str
+    result: str
+
+@dataclass
+class DynamicOrchestratorResult:
+    results: list[WorkerResult]
+    analysis: list[dict]
 
 class DynamicOrchestratorWorkflow:
-    pass
+    def __init__(self, system_prompt: str, 
+                orchestrator_prompt: str,
+                worker_prompt: str):
+        self.engine = IntelligenceEngine(api_key=os.getenv("ANTHROPIC_API_KEY"), 
+                                system_prompt=system_prompt)
+        self.orchestrator_prompt = orchestrator_prompt
+        self.worker_prompt = worker_prompt
+
+    def _get_tasks(self, xml_data: str) -> list[Task]:
+        json = xmltodict.parse(xml_data)
+        tasks = []
+        for task in json["tasks"]["task"]:
+            tasks.append(Task(name=task["name"], 
+                              description=task["description"], 
+                              type=task["type"]))
+        return tasks
+
+    def _run_worker(self, task: Task) -> WorkerResult:
+        worker_prompt = self._format_prompt(self.worker_prompt, task=task)
+        
+        response = self.engine.call(worker_prompt)
+        result = XMLProcessor.extract_data(response, "result")
+        return WorkerResult(name=task.name, 
+                            description=task.description, 
+                            type=task.type, 
+                            result=result)
+
+
+    def _format_prompt(self, prompt: str, **kwargs) -> str:
+        return prompt.format(**kwargs)
+
+    def run(self, query: str) -> DynamicOrchestratorResult:
+        orchestrator_prompt = self._format_prompt(self.orchestrator_prompt, query=query)
+        response = self.engine.call(orchestrator_prompt)
+        tasks_xml = XMLProcessor.extract_data(response, "tasks")
+        analysis = XMLProcessor.extract_data(response, "analysis")
+        tasks = self._get_tasks(tasks_xml)
+
+        with ThreadPoolExecutor(max_workers=len(tasks)) as executor:
+            futures = [executor.submit(self._run_worker, task) for task in tasks]
+            results = [future.result() for future in futures]
+
+        return DynamicOrchestratorResult(results=results, 
+                                        analysis=analysis)

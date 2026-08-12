@@ -1,3 +1,5 @@
+
+
 # Pegasus
 
 <p align="center">
@@ -56,7 +58,7 @@ pip install -e .
 
 - python 3.9 or newer
 - an API key exposed as `API_KEY`
-- optional local dependencies for advanced tools, such as a working browser environment for Playwright-based automation and a camera device for vision capture
+- optional local dependencies for advanced tools, such as Playwright browsers (run `playwright install chromium` to install) and a camera device for vision capture
 
 Get an API key from [OpenRouter](https://openrouter.ai/keys).
 
